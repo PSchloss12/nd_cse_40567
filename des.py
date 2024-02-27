@@ -191,6 +191,7 @@ def f(r,k):
     output = ""
     for i in P:
         output += s_out[i-1]
+    # print(output)
     return output
 
 M = "0000000100100011010001010110011110001001101010111100110111101111"
@@ -223,11 +224,12 @@ def decode(cipher, keys):
     mid = int(len(ip)/2)
     li = ip[:mid]
     ri = ip[mid:]
-
+    # print(f"L0: {li} R0: {ri}")
     for i in range(16):
         ri_1 = ri
         ri = XOR(li,f(ri_1,keys[i]))
         li = ri_1
+        # print(f"L{i+1}: {li} R{i+1}: {ri}")
     
     rl = ri+li
     output = ""
@@ -240,6 +242,7 @@ def decode_binary_string(s):
     return ''.join(chr(int(s[i*8:i*8+8],2)) for i in range(len(s)//8))
 
 keys = generate_keys(key)
+# print(keys)
 binary = decode(ciphertext, keys)
 plaintext = decode_binary_string(binary)
 print(plaintext)
